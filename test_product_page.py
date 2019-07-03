@@ -2,9 +2,21 @@ import pytest
 from pages.product_page import ProductPage
 
 
-links = ['http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear',
-         'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019'
-        ]
+# links = ['http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear',
+#          'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019'
+#         ]
+
+
+start_link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
+
+def prepare_links_with_promo(start_link):
+    links = []
+    for i in range(10):
+        promo_link = start_link + '?promo=offer' + str(i)
+        links.append(promo_link)
+    return links
+
+links = prepare_links_with_promo(start_link)
 
 
 @pytest.mark.parametrize('link', links)
