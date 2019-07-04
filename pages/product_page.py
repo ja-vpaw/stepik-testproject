@@ -4,7 +4,6 @@ from .locators import ProductPageLocators
 
 class ProductPage(BasePage):
 
-
     def add_to_basket_check(self):
         basket_current = self.get_current_basket_value()
         product_price = self.get_product_price()

@@ -20,6 +20,7 @@ def browser(request):
         opt = ChromeOptions()
         opt.add_experimental_option('w3c', False)
         opt.add_experimental_option('prefs', {'intl.accept_languages': language})
+        # opt.add_argument('--headless')
         browser = webdriver.Chrome(options=opt)
         return browser
 
