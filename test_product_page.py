@@ -3,6 +3,8 @@ from pages.product_page import ProductPage
 from pages.login_page import LoginPage
 from pages.basket_page import BasketPage
 
+
+# ссылки для проверки параметризации
 # links = ['http://selenium1py.pythonanywhere.com/catalogue/the-shellcoders-handbook_209/?promo=newYear',
 #          'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=newYear2019']
 
@@ -18,11 +20,11 @@ def prepare_links_with_promo(start_link):
         links.append(promo_link)
     return links
 
+# Подготовка ссылок для теста с промокодами
 #links = prepare_links_with_promo(start_link)
 
 @pytest.mark.parametrize('link', links)
 class TestProductPage():
-
 
     def test_guest_can_add_product_to_cart(self, browser, link):
         page = ProductPage(browser, link)
@@ -81,6 +83,7 @@ class TestProductPage():
         page = ProductPage(browser, link)
         page.open()
         page.should_be_login_link()
+
 
     def test_guest_can_go_to_login_page_from_product_page (self, browser, link):
         page = ProductPage(browser, link)
