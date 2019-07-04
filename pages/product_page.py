@@ -59,5 +59,5 @@ class ProductPage(BasePage):
     def get_current_basket_value(self):
         basket_current = self.browser.find_element(*ProductPageLocators.BASKET_CURRENT_VALUE).text
         basket_current = float(basket_current.splitlines()[0].split(':')[1].strip()[1:])
-        print("basket_current =".format(basket_current))
+        print("basket_current = {}".format(basket_current))
         return basket_current

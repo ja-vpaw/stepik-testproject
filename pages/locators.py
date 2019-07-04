@@ -8,6 +8,7 @@ class BasePageLocators(object):
 
     BASKET_VIEW_BUTTON = (By.CSS_SELECTOR, ".basket-mini .btn-default[href]")
 
+    USER_ICON = (By.CSS_SELECTOR, ".icon-user")
 
 class BasketPageLocators(object):
 
@@ -18,7 +19,13 @@ class BasketPageLocators(object):
 class LoginPageLocators(object):
 
     LOGIN_FORM = (By.CSS_SELECTOR, "#login_form")
+
+
     REGISTRATION_FORM = (By.CSS_SELECTOR, "#register_form")
+    REGISTRATION_FORM_EMAIL_FIELD = (By.CSS_SELECTOR, "#id_registration-email")
+    REGISTRATION_FORM_PASSWORD_FIELD = (By.CSS_SELECTOR, "#id_registration-password1")
+    REGISTRATION_FORM_CONFIRM_PASSWORD_FIELD = (By.CSS_SELECTOR, "#id_registration-password2")
+    REGISTRATION_FORM_REGISTER_SUBMIT_BUTTON = (By.CSS_SELECTOR, "[name=registration_submit]")
 
 
 class MainPageLocators(object):

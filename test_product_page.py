@@ -1,4 +1,4 @@
-import pytest
+import pytest, time
 from pages.product_page import ProductPage
 from pages.login_page import LoginPage
 from pages.basket_page import BasketPage
@@ -11,21 +11,23 @@ from pages.basket_page import BasketPage
 links = ['http://selenium1py.pythonanywhere.com/en-gb/catalogue/the-city-and-the-stars_95/']
 
 
-start_link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
-
-def prepare_links_with_promo(start_link):
-    links = []
-    for i in range(10):
-        promo_link = start_link + '?promo=offer' + str(i)
-        links.append(promo_link)
-    return links
-
 # Подготовка ссылок для теста с промокодами
-#links = prepare_links_with_promo(start_link)
+# start_link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
+#
+# def prepare_links_with_promo(start_link):
+#     links = []
+#     for i in range(10):
+#         promo_link = start_link + '?promo=offer' + str(i)
+#         links.append(promo_link)
+#     return links
+#
+#
+# links = prepare_links_with_promo(start_link)
 
 @pytest.mark.parametrize('link', links)
 class TestProductPage():
 
+    @pytest.mark.need_review
     def test_guest_can_add_product_to_cart(self, browser, link):
         page = ProductPage(browser, link)
         page.open()
@@ -85,6 +87,7 @@ class TestProductPage():
         page.should_be_login_link()
 
 
+    @pytest.mark.need_review
     def test_guest_can_go_to_login_page_from_product_page (self, browser, link):
         page = ProductPage(browser, link)
         page.open()
@@ -93,6 +96,7 @@ class TestProductPage():
         login_page.should_be_login_page()
 
 
+    @pytest.mark.need_review
     def test_guest_cant_see_product_in_basket_opened_from_product_page (self, browser, link):
         page = ProductPage(browser, link)
         page.open()
@@ -100,3 +104,30 @@ class TestProductPage():
         basket_page = BasketPage(browser, browser.current_url)
         basket_page.is_basket_has_not_items()
         basket_page.should_be_text_basket_is_empty()
+
+
+@pytest.mark.parametrize('link', links)
+class TestUserAddToCartFromProductPage():
+
+    @pytest.fixture(scope="function", autouse=True)
+    def setup(self, browser):
+        link_login = "http://selenium1py.pythonanywhere.com/en-gb/accounts/login/"
+        email = str(time.time()) + "@somemail.org"
+        password = "password" + str(time.time())
+        page = LoginPage(browser, link_login)
+        page.open()
+        page.register_new_user(email, password)
+        page.should_be_authorized_user()
+
+
+    def test_user_cant_see_message_success_add_to_basket(self, browser, link):
+        page = ProductPage(browser, link)
+        page.open()
+        page.should_not_be_message_success_add_to_basket()
+
+
+    @pytest.mark.need_review
+    def test_user_can_add_product_to_cart(self, browser, link):
+        page = ProductPage(browser, link)
+        page.open()
+        page.add_to_basket_check()
